@@ -1,0 +1,35 @@
+# interfaz
+diseño de interfaz
+
+private void GuardarUsuario()
+        {
+            if (textBox2.Text == textBox3.Text)
+            {
+                string connection = "datasource=localhost;port=3306;username=root;password=;database=sistema";
+                string query = "INSERT INTO principal(`id`, `user`, `password`) VALUES (NULL, '" + textBox1.Text + "',SHA1('" + textBox2.Text + "'))";
+                MySqlConnection conectionDatabase = new MySqlConnection(connection);
+                MySqlCommand databaseCommand = new MySqlCommand(query, conectionDatabase);
+                databaseCommand.CommandTimeout = 60;
+
+                try
+                {
+                    conectionDatabase.Open();
+                    MySqlDataReader reader1 = databaseCommand.ExecuteReader();
+                    MessageBox.Show("¡Successful registration!");
+                    Welcome registra = new Welcome();
+                    registra.Visible = true;
+                    this.Dispose(false);
+                    conectionDatabase.Close();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }
+            else
+            {
+                MessageBox.Show("¡Verify that the passwords match!");
+            }
+
+
+        }
